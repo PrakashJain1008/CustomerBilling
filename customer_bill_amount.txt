@@ -1,0 +1,70 @@
+# File location and type
+
+
+file_location = "/FileStore/tables/Customer.csv"
+file_loc = "/FileStore/tables/BillData.csv"
+file_location_file = "/FileStore/tables/Location.csv"
+file_type = "csv"
+
+# CSV options
+infer_schema = "true"
+first_row_is_header = "true"
+delimiter = ","
+
+# The applied options are for CSV files. For other file types, these will be ignored.
+# Read the files from location and create dataframe from it.
+
+df = spark.read.format(file_type) \
+  .option("inferSchema", infer_schema) \
+  .option("header", first_row_is_header) \
+  .option("sep", delimiter) \
+  .load(file_location)
+
+df2 = spark.read.format(file_type) \
+  .option("inferSchema", infer_schema) \
+  .option("header", first_row_is_header) \
+  .option("sep", delimiter) \
+  .load(file_loc)
+
+df3 = spark.read.format(file_type) \
+  .option("inferSchema", infer_schema) \
+  .option("header", first_row_is_header) \
+  .option("sep", delimiter) \
+  .load(file_location_file)
+
+display(df)
+
+
+
+# Create a view or table
+
+temp_table_name = "Customer_csv"
+temp_bill_data = "bill_data"
+temp_location_table = "location_table"
+
+df.createOrReplaceTempView(temp_table_name)
+df2.createOrReplaceTempView(temp_bill_data)
+df3.createOrReplaceTempView(temp_location_table)
+
+
+##show the data from table
+
+select * from Customer_csv;
+select * from bill_data order by cust_id desc;
+
+
+
+with CTE as (
+  select cust_id, sum(Amount) as Total_amount from bill_data group by cust_id
+  )
+  select c.name, ct.cust_id,l.Geoid,l.location, ct.Total_amount from CTE ct join Customer_csv c on ct.cust_id = c.cust_id join location_table l on l.Geoid = c.Geoid group by ct.cust_id,ct.Total_amount,c.name,l.location,l.Geoid order by ct.Total_amount desc limit 5
+  
+  
+ ##or the query would be like
+
+
+
+with CTE as (
+		select cust_id, sum(Amount) as Total_amount from bill_data group by cust_id
+			)
+  select distinct(c.name), ct.cust_id,l.Geoid,l.location, ct.Total_amount from CTE ct join Customer_csv c on ct.cust_id = c.cust_id join location_table l on l.Geoid = c.Geoid order by ct.Total_amount desc limit 5 
