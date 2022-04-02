@@ -1,0 +1,44 @@
+Git command
+
+git init - to initialize the .git folder at targeted location
+
+git status - to check the status of git files
+
+git add --a - to add all files at staging area 
+
+git commit -m "comment for commit" - after adding files/file at staging area do commit to add afterwards in remote repository
+
+git remote add origin URL - to add origin 
+
+git branch -M branch_name (master/name) - to set the branch 
+
+git push -u origin master (branch_name)  - To push the repository into branch location.
+
+git restore "file_name" -- discard the changes in the file 
+
+git restore --staged  "file name"  -- to unstage the file which have staged earlier. 
+
+		restoring here in git is quite possible or I could say its very easy but to make changes like deletion of file and rename the file manually at
+		file location itself is also easier than to make it in git .
+
+git diff -- when we have to track the status of staging area and working area changes.
+
+git diff HEAD   -- To check difference between last commit i.e. at remote repository and working area.
+
+git add --a and do again git diff head and then see the result.
+
+Yes got the point, if in between I add file in staging area then also it will show diff between 
+what was my last update and what is current update including the staging area.
+
+git diff HEAD HEAD^  ---last commit and previous to last commit (difference) head -1.
+
+git diff master origin/master   --- difference between local master and origin master it shows.
+
+git branch future-plans
+
+git checkout future-plans
+
+git checkout master
+
+git merge future-plans
+
