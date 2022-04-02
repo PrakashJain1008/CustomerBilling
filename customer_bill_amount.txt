@@ -62,7 +62,7 @@ with CTE as (
   
  ##or the query would be like
 
-
+adding DISTINCT function to the code 
 
 with CTE as (
 select cust_id, sum(Amount) as Total_amount from bill_data group by cust_id
