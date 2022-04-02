@@ -65,6 +65,9 @@ with CTE as (
 
 
 with CTE as (
-		select cust_id, sum(Amount) as Total_amount from bill_data group by cust_id
-			)
-  select distinct(c.name), ct.cust_id,l.Geoid,l.location, ct.Total_amount from CTE ct join Customer_csv c on ct.cust_id = c.cust_id join location_table l on l.Geoid = c.Geoid order by ct.Total_amount desc limit 5 
+select cust_id, sum(Amount) as Total_amount from bill_data group by cust_id
+	)
+  select distinct(c.name), ct.cust_id,l.Geoid,l.location, ct.Total_amount from CTE ct 
+join Customer_csv c on ct.cust_id = c.cust_id 
+join location_table l on l.Geoid = c.Geoid 
+order by ct.Total_amount desc limit 5 
